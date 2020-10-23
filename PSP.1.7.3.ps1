@@ -6,6 +6,9 @@
 	 Organization: 	Helion Technologies
 	 Filename:     	PSP.VERSION.ps1
 	===========================================================================
+	----------------
+	Initial UIT Edit by Brandon Hodgkin on 10/23/2020
+	----------------
 	.DESCRIPTION
 		This script is designed to clean up un-needed cache, cookies and other temporary files from the computer.
 
@@ -342,12 +345,12 @@ function StartupItems ()
 
 function UserCleanup ()
 {
-	## 20190328.jmeyer.Added cleaning up user folders for users that have not logged in in over 30 days. Does not touch Helion, Special, Default User, Public, or All Users
+	## 20190328.jmeyer.Added cleaning up user folders for users that have not logged in in over 30 days. Does not touch UITAdmin, Special, Default User, Public, or All Users
 	## 20191227.jmeyer.Adjusted removal to display only usernames of users that are being deleted, as they are being deleted. This is also written in the log now.
 	If ($Extras -contains "Users")
 	{
 		Write-Host "Cleaning up unused User profiles in Users directory (Older than 30 days)..." -ForegroundColor Yellow
-		$UserFolders = Get-WmiObject -Class Win32_UserProfile | Where-Object { ($_.localpath -notlike "*helion*") -and (!$_.Special) -and ($_.ConvertToDateTime($_.LastUseTime) -lt $30DaysBack) }
+		$UserFolders = Get-WmiObject -Class Win32_UserProfile | Where-Object { ($_.localpath -notlike "*uitadmin*") -and (!$_.Special) -and ($_.ConvertToDateTime($_.LastUseTime) -lt $30DaysBack) }
 		
 		foreach ($User in $UserFolders)
 		{
